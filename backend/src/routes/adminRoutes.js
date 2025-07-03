@@ -1,6 +1,10 @@
 const express = require('express');
 const { verifyToken, isAdmin } = require('../middlewares/authMiddleware');
-const { createEmployee, getAllEmployees } = require('../controllers/adminController');
+const {
+  createEmployee,
+  getAllEmployees,
+  getEmployeesByDepartment,
+} = require('../controllers/adminController');
 
 const router = express.Router();
 
@@ -77,5 +81,34 @@ router.post('/employees', verifyToken, isAdmin, createEmployee);
  *         description: Forbidden (not admin)
  */
 router.get('/employees', verifyToken, isAdmin, getAllEmployees);
+
+/**
+ * @swagger
+ * /api/admin/employees/by-department:
+ *   get:
+ *     summary: Get employees by department ID (Admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: department
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Department ID to filter employees
+ *     responses:
+ *       200:
+ *         description: Employees fetched successfully
+ *       400:
+ *         description: Missing or invalid department ID
+ *       404:
+ *         description: No employees found in this department
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (not admin)
+ */
+router.get('/employees/by-department', verifyToken, isAdmin, getEmployeesByDepartment);
 
 module.exports = router;

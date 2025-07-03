@@ -65,4 +65,22 @@ const getAllEmployees = async (req, res) => {
   }
 };
 
-module.exports = { createEmployee, getAllEmployees };
+const getEmployeesByDepartment = async (req, res) => {
+    try {
+        const { department } = req.query;
+        if (!department) {
+            return res.status(400).json({ message: 'Department ID is required' });
+        }
+
+        const employees = await Employee.find({ department });
+        if (employees.length === 0) {
+            return res.status(404).json({ message: 'No employees found in this department' });
+        }
+
+        res.status(200).json(employees);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching employees', error: error.message });
+    }
+};
+
+module.exports = { createEmployee, getAllEmployees, getEmployeesByDepartment };
