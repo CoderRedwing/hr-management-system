@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS / IDE files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Build folders
+dist/
+build/
+
+# Coverage reports
+coverage/
+
+# React dev server artifacts
+.cache/
